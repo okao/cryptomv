@@ -1,18 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { captureOrder } from '../../../../lib/paypal';
 
-interface RouteParams {
-	params: {
-		orderID: string;
-	};
-}
-
 export async function POST(
 	request: NextRequest,
-	context: RouteParams
+	{ params }: { params: Promise<{ orderID: string }> }
 ) {
 	try {
-		const { orderID } = await context.params;
+		const { orderID } = await params;
 
 		if (!orderID) {
 			return NextResponse.json(
